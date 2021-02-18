@@ -35,7 +35,6 @@ def handle_hello():
         "family": members
     }
 
-
     return jsonify(response_body), 200
 
 @app.route('/members', methods=['POST'])
@@ -50,6 +49,31 @@ def handle_new():
     }
 
     return jsonify(response_body), 200
+
+@app.route('/member/<int:member_id>', methods=['DELETE'])
+def handle_delete():
+    body = request.json
+
+    jackson_family.delete_member(body)
+    response_body = {
+        member
+    }
+
+    if 'id' not in body:
+        return 'You need to specify the id', 400
+    return jsonify(response_body), 200
+
+@app.route('/member/<int:member_id>', methods=['GET'])
+def handle_member():
+    body = request.json
+
+    member = jackson_family.get_member(body)
+    response_body = {
+        member
+    }
+    if 'id' not in body:
+        return 'You need to specify the id', 400
+    return jsonify(response_body), 200 
 
 
 # this only runs if `$ python src/app.py` is executed
