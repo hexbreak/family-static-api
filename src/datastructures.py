@@ -32,14 +32,14 @@ class FamilyStructure:
     def delete_member(self, id):
         # fill this method and update the return
         for x in range(len(self._members)):
-            if id == self._members[x].id:
+            if id == self._members[x]["id"]:
                 member_removed = self._members.pop(x)
         return member_removed
 
     def get_member(self, id):
         # fill this method and update the return
         for x in range(len(self._members)):
-            if id == self._members[x].id:
+            if id == self._members[x]["id"]:
                 return self._members[x]
 
     # this method is done, it returns a list with all the family members

@@ -50,30 +50,33 @@ def handle_new():
 
     return jsonify(response_body), 200
 
+
 @app.route('/member/<int:member_id>', methods=['DELETE'])
-def handle_delete():
+def handle_delete(member_id):
     body = request.json
 
-    jackson_family.delete_member(body)
+    deletion = jackson_family.delete_member(member_id)
     response_body = {
-        member
+        "deleted_member": deletion
     }
 
-    if 'id' not in body:
-        return 'You need to specify the id', 400
+    if not deletion:
+        return 'User does not exist', 400
     return jsonify(response_body), 200
 
+
 @app.route('/member/<int:member_id>', methods=['GET'])
-def handle_member():
+def handle_get(member_id):
     body = request.json
 
-    member = jackson_family.get_member(body)
+    obtained = jackson_family.get_member(member_id)
     response_body = {
-        member
+        "get_member": obtained
     }
-    if 'id' not in body:
-        return 'You need to specify the id', 400
-    return jsonify(response_body), 200 
+
+    if not obtained:
+        return 'User does not exist', 400
+    return jsonify(response_body), 200
 
 
 # this only runs if `$ python src/app.py` is executed
